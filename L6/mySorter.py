@@ -8,12 +8,20 @@ class mySorter():
         
     def set_input_data(self, file_path_name: str):
         """This methods sets the information about the file that will be used to read the data"""
-        self.alist = []
-        with open(file_path_name) as csvfile:
-            readCSV = csv.reader(csvfile, delimiter = ',')
-            for row in readCSV:
-                for element in row:
-                    self.alist.append(element)
+        try:
+            self.alist = []
+            with open(file_path_name) as csvfile:
+                readCSV = csv.reader(csvfile, delimiter = ',')
+                for row in readCSV:
+                    for element in row:
+                        self.alist.append(float(element))
+        except FileNotFoundError:
+            print("File doesn't exist")
+            return False
+        except ValueError:
+            print("A value found is not a number")
+            return False
+        return True
     
     def set_output_data(self, file_path_name: str):
         """This methods sets the information about the file that will be used to store the sorted data"""
@@ -90,18 +98,3 @@ class mySorter():
                 j=j+1
                 k=k+1
         #print("Merging ",alist)
-
-def main():
-    sorter = mySorter()
-    sorter.set_input_data('simplefile1.csv')
-    print(sorter.alist)
-    # sorter.execute_quick_sort()
-    # print(sorter.alist)
-    sorter.execute_merge_sort()
-    print(sorter.alist)
-    #mergeSort(alist1.alist)
-    #print(alist1.alist)
-    #alist1.set_output_data(alist1.alist, 'alist1ordered.csv')
-
-if __name__ == "__main__":
-    main()
